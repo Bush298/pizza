@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пицца</title>
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    <script type="text/javascript">
+        var map;
+    
+        DG.then(function () {
+            map = DG.map('map', {
+                center: [43.15, 76.54],
+                zoom: 13
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <img class="logo__img" src="/assets/images/logo.png" alt="logo">
+                    <div class="logo__text">
+                        <p class="logo__title">PIZZA</p>
+                        <p class="logo__subtitle">самая вкусная пицца во вселенной</p>
+                    </div>
+                </div>
+                <div class="basket" onclick="toggleCart()">
+                    <span class="basket__total">520 ₽</span>
+                    <img class="basket__img" src="/assets/images/basket.png" alt="basket">
+                    <span class="basket__items">3</span>
+                </div>
+
+                <div class="shopping-cart__wrapper">
+                
+                <div class="shopping-cart">
+                    <div class='shopping-cart__header'>
+                        <img src="/assets/images/shop-cart.png" width="29" height="29" alt="" style="margin-right: 0.5em;">
+                        <h3 class="shopping-cart__title">Корзина</h3>
+                        <div class="shopping-cart__clear" onclick="clearCart()">
+                            <img src="/assets/images/delete-item.png" alt="trash" class="shopping-cart__clear-img">
+                            <input class="shopping-cart__clear-btn" type="button" value="Очистить корзину">
+                        </div>
+                        <img src="/assets/images/close-btn.webp" alt="Закрыть корзину" class="shopping-cart__close-btn" onclick="toggleCart()">
+                    </div>
+                    <div class="shopping-cart__items">
+        
+                      <!------------ ТУТ ДОБАВЛЯЕТ JS------------------>
+
+                    </div>
+                    <div class="shopping-cart__footer">
+                        <p class="shopping-cart__footer__amount">Всего пицц: <span id="amount">3 шт.</span></p>
+                        <p class="shopping-cart__footer__total">Сумма заказа: <span id="total">900 ₽</span></p>
+                    </div>
+                </div>
+                </div>
+
+            </header>
+            <main>
+                <!--<div class="cart">
+                    <div class="cart__items">
+                        <div class="cart__item">
+                            <img class="cart__item__img" src="" alt="">
+                            <span class="cart__item__name">cheeseburger</span>
+                            <span class="cart__item__dough">тонкое</span>
+                            <span class="cart__item__size">26</span>
+                            <div class="cart__item__quantity">
+                                <button class="cart__item__quantity__btn">-</button> 
+                                <span class="cart__item__quantity__counter">1</span>   
+                                <button class="cart__item__quantity__btn">+</button>    
+                            </div>
+                            <span class="cart__item__price">360 р</span>
+                        </div> 
+                    </div> 
+                    <p class="cart__amount">Количество : <span id="amount">1</span></p>
+                    <p class="cart__total">Стоимость : <span id='total'>360 р</span></p>
+                    <button class="cart__clear">очистить</button>
+                    <button class="cart__buy">купить</button>
+                </div>-->
+
+
+                <div class="filter">
+                    <div class="container">
+                        <div class="filter-inner">
+                            <div class="pizza-types">
+                                <button id='all' class="pizza-types__item pizza-types__item__active">Все</button>
+                                <button id="meat" class="pizza-types__item">Мясные</button>
+                                <button id="vegan" class="pizza-types__item">Вегетарианская</button>
+                                <button id="bbq" class="pizza-types__item">Гриль</button>
+                                <button id="spicy" class="pizza-types__item">Острые</button>
+                                <button id="calcone" class="pizza-types__item">Закрытые</button>
+                            </div>
+                            <div class="sort-by">
+                                <img class="arrow" src="/assets/images/vector.png" alt="">
+                                <p class="sort-by__text">Сортировка по:</p>
+                                <span class="sort-by__choice">популярности</span>
+                                <div class="sort-by__selections">
+                                    <span class="sort-by__selections__item sort-by__selections__item_active">популярности</span>
+                                    <span class="sort-by__selections__item">по цене</span>
+                                    <span class="sort-by__selections__item">по алфавиту</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu">
+                    <div class="container">
+                        <h3 class="menu-title">Все пиццы</h3>
+                        <div class="menu-inner">
+                            <div class="menu-items">
+
+                                <!--<div class="pizza"> 
+                                    <img src="/assets/images/pizza/cheeseburger.jpg" alt="" class="pizza__img">
+                                    <h4 class="pizza__name">Чизбургер-пицца</h4>
+                                    <div class="pizza__settings">
+                                        <div class="dough">
+                                            <span id="thin" class="dough__item">тонкое</span>
+                                            <span id="regular" class="dough__item">традиционное</span>
+                                            <div class="dough-block"></div>
+                                        </div>
+                                        <div class="diameter">
+                                            <span id="small" class="diameter__item">26 см.</span>
+                                            <span id="medium" class="diameter__item">30 см.</span>
+                                            <span id="large" class="diameter__item">40 см.</span>
+                                            <span class="diameter-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="pizza__add">
+                                        <span class="pizza__price">от 395 ₽</span>
+                                        <button class="pizza__add-btn">+ Добавить</button>
+                                    </div>
+                                </div>-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div id="map" style="width:500px; height:400px"></div>
+    <script src="
+https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js
+"></script>
+    <script src="/script.js"></script>
+    
+</body>
+</html>
