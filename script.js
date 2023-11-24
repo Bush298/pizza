@@ -184,7 +184,6 @@ let cart = {
     total: 0,
     
     drawCart() {
-        console.log('bruh' )
         shoppingCartItems.innerHTML ='' 
         let items = JSON.parse(cartJSON).items
 
@@ -198,7 +197,7 @@ let cart = {
             <span class="item__size">${items[i].diameter}</span>
             </div>
             <p class="item__price">${items[i].currentPrice}</p>
-            <img class="item__clear" src="" onclick="removeCartItem(this.parentElement)">
+            <img class="item__clear" src="edfe" onclick="removeCartItem(this.parentElement)">
             </div>`
         }
         
@@ -235,8 +234,16 @@ function clearCart(){
 }
 
 function removeCartItem(item) {
+    let searchFor = item.querySelector('.item__name').innerHTML
+    let cartDelete = JSON.parse(cartJSON).items
+    for (i=0; i< cartDelete.length;i++){
+        if (cartDelete[i].name == searchFor) {
+            cartJSON = JSON.parse(cartJSON).items.splice(i, 1)
+            cartJSON = JSON.stringify(cartJSON)
+            break
+        }
+    }
     item.parentElement.removeChild(item)
-    
     cart.calcCart()
 }
 
