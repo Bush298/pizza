@@ -45,11 +45,11 @@ class Pizza {
                                 </div>`
     }
     changePrice(){
-        if (this.diameter == 's') {
+        if (this.diameter == '26см.') {
             this.currentPrice = this.priceS
-        } else if (this.diameter == 'm') {
+        } else if (this.diameter == '30см.') {
             this.currentPrice = this.priceM
-        } else if (this.diameter == 'l') {
+        } else if (this.diameter == '40см.') {
             this.currentPrice = this.priceL
         }
         return this.currentPrice
@@ -58,10 +58,10 @@ class Pizza {
 
 
 let menu=[
-    new Pizza ("/assets/images/pizza/cheeseburger.jpg", 'Чизбургер-пицца', 'тонкое', 's', 1180, 2200, 3620, false, false, false, true),
-    new Pizza ("/assets/images/pizza/cheese.jpg", 'Сырная', 'тонкое', 's', 1800, 2560, 4400, true, false, false, false),
-    new Pizza ("/assets/images/pizza/cheeseburger.jpg", 'Креветки по-азиатски', 'тонкое', 's', 290, 420, 670, false, false, true, false),
-    new Pizza ("/assets/images/pizza/cheese.jpg", 'Сырный цыпленок', 'тонкое', 's', 385, 500, 740,  true, false, false, false)
+    new Pizza ("assets/images/pizza/cheeseburger.jpg", 'Чизбургер-пицца', 'тонкое', '26см.', 1180, 2200, 3620, false, false, false, true),
+    new Pizza ("assets/images/pizza/cheese.jpg", 'Сырная', 'тонкое', '26см.', 1800, 2560, 4400, true, false, false, false),
+    new Pizza ("assets/images/pizza/cheeseburger.jpg", 'Креветки по-азиатски', 'тонкое', '26см.', 290, 420, 670, false, false, true, false),
+    new Pizza ("assets/images/pizza/cheese.jpg", 'Сырный цыпленок', 'тонкое', '26см.', 385, 500, 740,  true, false, false, false)
 ]
 
 for (let i=0; i < menu.length; i++){
@@ -120,7 +120,7 @@ function pizzaConfig(){
         })
         
         pizzaSizeSmallBtn[i].addEventListener('click', function(){
-           sortedPizzas[i].diameter = 's'
+           sortedPizzas[i].diameter = '26см.'
 
             new_price = sortedPizzas[i].changePrice()
             pizzaPrice[i].innerHTML = new_price + 'р'
@@ -131,7 +131,7 @@ function pizzaConfig(){
         })
 
         pizzaSizeMediumBtn[i].addEventListener('click', function(){
-            sortedPizzas[i].diameter = 'm'
+            sortedPizzas[i].diameter = '30см.'
 
             new_price = sortedPizzas[i].changePrice()
             pizzaPrice[i].innerHTML = new_price + 'р'
@@ -143,7 +143,7 @@ function pizzaConfig(){
         })
         
         pizzaSizeLargeBtn[i].addEventListener('click', function(){
-            sortedPizzas[i].diameter = 'l'
+            sortedPizzas[i].diameter = '40см.'
 
             new_price = sortedPizzas[i].changePrice()
             pizzaPrice[i].innerHTML = new_price + 'р'
@@ -180,7 +180,6 @@ let shoppingCartItems = document.querySelector('.shopping-cart__items')
 
 let cart = {
     items: [],
-    amount: 0,
     total: 0,
     
     drawCart() {
@@ -234,15 +233,19 @@ function clearCart(){
 }
 
 function removeCartItem(item) {
-    let searchFor = item.querySelector('.item__name').innerHTML
-    let cartDelete = JSON.parse(cartJSON).items
-    for (i=0; i< cartDelete.length;i++){
-        if (cartDelete[i].name == searchFor) {
-            cartJSON = JSON.parse(cartJSON).items.splice(i, 1)
-            cartJSON = JSON.stringify(cartJSON)
+    let name = item.querySelector('.item__name').innerHTML
+    let dough = item.querySelector('.item__dough').innerHTML
+    let size = item.querySelector('.item__size').innerHTML
+    cartJSON = JSON.parse(cartJSON)
+    for (i=0; i< cartJSON.items.length;i++){
+        if (cartJSON.items[i].name == name && 
+            cartJSON.items[i].dough == dough &&
+            cartJSON.items[i].diameter == size) {
+            cartJSON.items.splice(i, 1)
             break
         }
     }
+    cartJSON = JSON.stringify(cartJSON)
     item.parentElement.removeChild(item)
     cart.calcCart()
 }
